@@ -5,16 +5,18 @@
     <div class="row">
         <div class="col-9" style="padding-left: 150px;">
 
-                <div> <h1> Fenix </h1></div>
+                <div> <h1> @ {{ $user->username}} </h1></div>
                 <div class="d-flex">
                     <div class="pr-3"><strong> Broj članova: 27 </strong></div>
                     <div class="pr-3"><strong> Broj akcija: 10 </strong></div>
-                    <div class="pr-3"><strong> Datum učlanjenja: 5.3.2020. </strong></div>
+                    <div class="pr-3"><strong> Datum učlanjenja: {{ $user->created_at }}  </strong></div>
                 </div>
 
-                <div class="pt-4"> KOSTAJNICA  </div>
-                <div> About section </div>
-                <div> <a href="https://www.facebook.com/okfenix"> Facebook </a> </div>
+                <div class="pt-4"> {{ $user->profile->title }} </div>
+                <div> {{ $user->profile->description }} </div>
+                <div> <a href="https://www.facebook.com/okfenix"> {{ $user->profile->url ?? 'N/A' }} </a> </div>
+
+                <div class="pt-3"> <a href="#"> Add Post </a> </div>
         </div>
         <div class="col-3">
 
