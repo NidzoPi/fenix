@@ -8,7 +8,7 @@
                 <div> <h1> @ {{ $user->username}} </h1></div>
                 <div class="d-flex">
                     <div class="pr-3"><strong> Broj članova: 27 </strong></div>
-                    <div class="pr-3"><strong> Broj akcija: 10 </strong></div>
+                    <div class="pr-3"><strong> Broj akcija: {{ $user->posts->count() }} </strong></div>
                     <div class="pr-3"><strong> Datum učlanjenja: {{ $user->created_at }}  </strong></div>
                 </div>
 
@@ -16,7 +16,7 @@
                 <div> {{ $user->profile->description }} </div>
                 <div> <a href="https://www.facebook.com/okfenix"> {{ $user->profile->url ?? 'N/A' }} </a> </div>
 
-                <div class="pt-3"> <a href="#"> Add Post </a> </div>
+                <div class="pt-3"> <a href="/p/create"> Add Post </a> </div>
         </div>
         <div class="col-3">
 
@@ -26,9 +26,13 @@
 
         <div class="row pt-5">
 
-            <div class="col-4"><img src = "https://scontent.fbeg4-1.fna.fbcdn.net/v/t1.0-9/81791209_176065987119140_9153136024346427392_n.jpg?_nc_cat=110&_nc_sid=110474&_nc_ohc=Z9QpwqUIWcQAX8cTQQr&_nc_ht=scontent.fbeg4-1.fna&oh=ef0db005dd7f7766f7d4fa6a24b042c3&oe=5E9A2E42" class="w-100"></div>
-            <div class="col-4"><img src = "https://scontent.fbeg4-1.fna.fbcdn.net/v/t1.0-9/81791209_176065987119140_9153136024346427392_n.jpg?_nc_cat=110&_nc_sid=110474&_nc_ohc=Z9QpwqUIWcQAX8cTQQr&_nc_ht=scontent.fbeg4-1.fna&oh=ef0db005dd7f7766f7d4fa6a24b042c3&oe=5E9A2E42" class="w-100"></div>
-            <div class="col-4"><img src = "https://scontent.fbeg4-1.fna.fbcdn.net/v/t1.0-9/81791209_176065987119140_9153136024346427392_n.jpg?_nc_cat=110&_nc_sid=110474&_nc_ohc=Z9QpwqUIWcQAX8cTQQr&_nc_ht=scontent.fbeg4-1.fna&oh=ef0db005dd7f7766f7d4fa6a24b042c3&oe=5E9A2E42" class="w-100"></div>
+            @foreach($user->posts as $post)
+            <div class="col-4"> 
+                <a href="/p/{{ $post->id }}">
+                   <img src = "/storage/{{ $post->image }}" class="w-100">
+                </a>
+            </div>
+            @endforeach
 
         </div>
     </div>
