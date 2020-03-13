@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Mail\NewUserWelcomeMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/email', function(){
+	return new NewUserWelcomeMail();
+});
+
 // Posts
 Route::get('/p/create', 'PostsController@create');
-Route::post('/p', 'PostsController@store');
 Route::get('/p/{post}', 'PostsController@show');
+Route::post('/p', 'PostsController@store');
 
 // Profile
 Route::get('/profile/{user}', 'OrganizationsController@index')->name('profile.show');
+Route::get('/profile/{user}/edit', 'OrganizationsController@edit')->name('profile.edit');
+Route::patch('/profile/{user}', 'OrganizationsController@update')->name('profile.update');
