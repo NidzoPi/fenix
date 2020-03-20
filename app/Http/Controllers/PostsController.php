@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use DB;
+use App\User;
 
 class PostsController extends Controller
 {
-public function __construct()
-{
-	$this->middleware('auth');
-}
+    public function __construct()
+    {
+    	$this->middleware('auth');
+    }
 
     public function create()
     {
@@ -41,8 +43,10 @@ public function __construct()
     	return redirect('/profile/'.auth()->user()->id);
     }
 
-    public function show (\App\Post $post)
+    public function show (User $user, \App\Post $post)
     {
-    	return view('posts.show', compact('post'));
+
+         $rposts = DB::select('select * from volunteers v inner join hours h on v.id = h.volunteer_id where h.post_id = '.$post->id.'');
+    	return view('posts.show', compact('post', 'rposts'));
     }
 }

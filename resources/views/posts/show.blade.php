@@ -32,5 +32,21 @@
 
 
   </div>
+
+  <div class="row">
+    <div class="col-4 d-flex">
+      <div> <a href="/{{$post->id}}/h/create"> Dodaj volontera </a> </div>
+      <div class="pl-5"> <a href=""> Ko je učestvovao? </a> </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row"> 
+    @foreach($rposts as $p)
+     
+       <div class="pl-3">  {{ $p->first_and_last_name }} - {{ $p->hours }}h | </div>
+     
+    @endforeach
 </div>
+</div>
+
 @endsection

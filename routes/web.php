@@ -33,3 +33,14 @@ Route::post('/p', 'PostsController@store');
 Route::get('/profile/{user}', 'OrganizationsController@index')->name('profile.show');
 Route::get('/profile/{user}/edit', 'OrganizationsController@edit')->name('profile.edit');
 Route::patch('/profile/{user}', 'OrganizationsController@update')->name('profile.update');
+
+// Volunteers
+Route::get('/v/create', 'VolunteersController@create');
+Route::get('/v/all', 'VolunteersController@showAll');
+Route::get('/v/{volunteer}', 'VolunteersController@show');
+Route::post('/v', 'VolunteersController@store');
+
+//Add hours
+Route::get('/{post}/h/create', 'HoursController@create');
+Route::post('/h', 'HoursController@store');
+Route::get('/h/v', 'HoursController@showInAction');

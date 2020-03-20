@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewUserWelcomeMail;
+use App\Volunteer;
 
 class User extends Authenticatable
 {
@@ -61,5 +62,10 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class)->orderBy('created_at', 'DESC');
+    }
+
+    public function volunteers()
+    {
+        return $this->hasMany(Volunteer::class);
     }
 }

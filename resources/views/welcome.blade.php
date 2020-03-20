@@ -81,18 +81,15 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    I mi gradimo Srpsku!
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Mateo</a>
-                    <a href="https://laracasts.com">Lazar</a>
-                    <a href="https://laravel-news.com">Filip</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://blog.laravel.com">Link</a>
+                    <a href="https://nova.laravel.com">Link</a>
+                    <a href="https://forge.laravel.com">Link</a>
+                    <a href="https://vapor.laravel.com">Link</a>
+                    <a href="https://github.com/laravel/laravel">Link</a>
                 </div>
             </div>
         </div>

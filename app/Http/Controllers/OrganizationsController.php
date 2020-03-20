@@ -5,12 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Intervention\Image\Facades\Image;
+use DB;
 
 class OrganizationsController extends Controller
 {
    public function index(User $user)
     {
-        return view('profiles.index', compact('user'));
+    
+        $rv = DB::select('select hours from hours h 
+            inner join posts p on h.post_id = p.id
+            where p.user_id = '.$user->id.'');
+
+        
+
+
+        return view('profiles.index', compact('user', 'rv'));
     }
 
 
