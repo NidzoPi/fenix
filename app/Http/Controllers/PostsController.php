@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use DB;
 use App\User;
+use App\Post;
+use App\Volunteer;
 
 class PostsController extends Controller
 {
     public function __construct()
     {
-    	$this->middleware('auth');
+    	
     }
 
     public function create()
@@ -43,10 +45,37 @@ class PostsController extends Controller
     	return redirect('/profile/'.auth()->user()->id);
     }
 
-    public function show (User $user, \App\Post $post)
+    public function show ( Post $post)
     {
 
-         $rposts = DB::select('select * from volunteers v inner join hours h on v.id = h.volunteer_id where h.post_id = '.$post->id.'');
-    	return view('posts.show', compact('post', 'rposts'));
+    
+         $postHours = $post->hours;
+         $models = [];
+
+
+         foreach ($postHours as $pH) {
+             $volunteer = $pH->volunteer;
+             $vHours = $volunteer->hours;
+             foreach ($vHours as $vH) {
+                 $sum = $vH->hours;
+             }
+
+             $models[] = [
+
+                'volunteer' => $volunteer,
+                'sum' => $sum,
+
+             ];
+         }
+
+            uasort($models, function($a, $b) {
+            if ($a['sum'] == $b['sum']) {
+                return 0;
+            }  
+
+            return ($a['sum'] > $b['sum']) ? -1 : 1;
+        });
+
+    	return view('posts.show', ['models' => $models])->withPost($post);
     }
 }

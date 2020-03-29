@@ -12,5 +12,9 @@ class Hour extends Model
 	{
 		return $this->belongsTo(Post::class);
 	}
+	public function volunteer()
+	{
+		return $this->belongsTo(Volunteer::class);
+	}
 
 }

@@ -41,9 +41,9 @@
   </div>
   <hr>
   <div class="row"> 
-    @foreach($rposts as $p)
+    @foreach($models as $m)
      
-       <div class="pl-3">  {{ $p->first_and_last_name }} - {{ $p->hours }}h | </div>
+       <div class="pl-3">  {{ $m['volunteer']->first_and_last_name }}  {{$m['sum']}}h | </div>
      
     @endforeach
 </div>

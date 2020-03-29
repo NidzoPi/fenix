@@ -9,7 +9,7 @@
                 <div class="d-flex">
                     <div class="pr-3"><strong>  Članova: {{ $user->volunteers->count() }} </strong></div>
                     <div class="pr-3"><strong>  Akcija: {{ $user->posts->count() }} </strong></div>
-                    <div class="pr-3"><strong>  Volonterskih sati: <?php $count = 0;  ?> @foreach($rv as $v) <?php $count+=$v->hours; ?>  @endforeach {{$count}}  </strong></div>
+                    <div class="pr-3"><strong>  Volonterskih sati: {{ $sumHours }} </strong></div>
                 </div>
 
                 <div class="d-flex pt-2">
@@ -40,11 +40,15 @@
         <div class="row pt-5">
 
             @foreach($user->posts as $post)
-            <div class="col-4"> 
-                <a href="/p/{{ $post->id }}">
-                   <img src = "/storage/{{ $post->image }}" class="w-100 img-fluid">
-                   <p> {{ $post->title }} </p>
-                </a>
+            <div class="col-4 pt-3"> 
+                <div class="hovereffect">
+                    <a href="/p/{{ $post->id }}">
+                       <img class="img-responsive"  src = "/storage/{{ $post->image }}" class="w-100 img-fluid">
+                       <div class="overlay">
+                         <h2> {{ $post->title }} </h2>
+                        </div>
+                    </a>
+                </div>
             </div>
             @endforeach
 

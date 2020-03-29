@@ -7,6 +7,7 @@ use App\Volunteer;
 use Intervention\Image\Facades\Image;
 use App\User;
 use DB;
+use Auth;
 
 class VolunteersController extends Controller
 {
@@ -21,12 +22,26 @@ class VolunteersController extends Controller
 	
     public function show (Volunteer $volunteer)
     {
-        $rv = DB::select('select * from posts p inner join hours h 
-            on p.id = h.post_id  where h.volunteer_id =' .$volunteer->id.'');
+       /* $rv = DB::select('select * from posts p inner join hours h 
+            on p.id = h.post_id  where h.volunteer_id =' .$volunteer->id.'');*/
+        
 
-        $hours = DB::select('select * from hours h inner join volunteers v on h.volunteer_id = v.id');
+        $postsHours = $volunteer->hours;
 
-    	return view('volunteers.show', compact('volunteer', 'rv', 'hours'));
+        $sum = 0;
+
+        foreach ($postsHours as $pH) {
+            $sum+=$pH->hours;
+            $post = $pH->post;            
+
+             $models[] = [
+                'post' => $post,
+            ];
+        }
+
+    	return view('volunteers.show', [
+            'models' => $models
+        ])->withSum($sum)->withVolunteer($volunteer);
     }
 
     public function store()
@@ -53,15 +68,39 @@ class VolunteersController extends Controller
     	return redirect('/profile/'.auth()->user()->id);
     }
 
-    public function showAll (Volunteer $volunteer)
+    public function showAll ()
     {
+        $user = Auth::user();
+        $volunteers = $user->volunteers;
+        
+        $models = [];
 
-      $rv = DB::select('select * from hours h inner join volunteers v on h.volunteer_id = v.id');
+        foreach ($volunteers as $volunteer) {
+            $posts = $volunteer->hours;
+            $sum = 0;
+            $numberOfPosts = 0;
 
-    	return view('volunteers.showAll', compact('volunteer', 'rv'));
+            foreach ($posts as $post) {
+                $sum += $post->hours;
+                $numberOfPosts++;
+            }
+
+            $models[] = [
+                'volunteer' => $volunteer,
+                'hours' => $sum,
+                'number' => $numberOfPosts,
+            ];
+        }
+
+        uasort($models, function($a, $b) {
+            if ($a['hours'] == $b['hours']) {
+                return 0;
+            }  
+
+            return ($a['hours'] > $b['hours']) ? -1 : 1;
+        });
+        
+        return view('volunteers.showAll', ['models' => $models]);
     }
-
-
-
 
 }

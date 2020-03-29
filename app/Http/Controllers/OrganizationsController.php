@@ -6,20 +6,32 @@ use Illuminate\Http\Request;
 use App\User;
 use Intervention\Image\Facades\Image;
 use DB;
+use App\Hours;
 
 class OrganizationsController extends Controller
 {
    public function index(User $user)
     {
     
-        $rv = DB::select('select hours from hours h 
+      /*  $rv = DB::select('select hours from hours h 
             inner join posts p on h.post_id = p.id
-            where p.user_id = '.$user->id.'');
+            where p.user_id = '. $user->id); */
 
-        
+        $userPosts = $user->posts;
+        $sumHours = 0;
+
+        foreach ($userPosts as $p)
+        {
+            $postHours = $p->hours;
+            foreach ($postHours as $h)
+            {
+                $sumHours+=$h->hours;
+            }
+        }
 
 
-        return view('profiles.index', compact('user', 'rv'));
+
+        return view('profiles.index', compact('user', 'sumHours'));
     }
 
 

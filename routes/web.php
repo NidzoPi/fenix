@@ -43,4 +43,4 @@ Route::post('/v', 'VolunteersController@store');
 //Add hours
 Route::get('/{post}/h/create', 'HoursController@create');
 Route::post('/h', 'HoursController@store');
-Route::get('/h/v', 'HoursController@showInAction');
+//Route::get('/h/v', 'HoursController@showInAction');

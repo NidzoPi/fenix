@@ -18,7 +18,7 @@
           
                 <div class="d-flex">
 	            		<div> <?php $sumH = 0; ?> Ukupno volonterskih sati: 
-	     				 @foreach ($hours as $h)   @if($volunteer->id == $h->volunteer_id) <?php $sumH+=$h->hours; ?>  @endif @endforeach {{$sumH}} </div>
+	     				  {{$sum}} </div>
                 		</div>
               
 
@@ -31,14 +31,18 @@
 
         <div class="row pt-5">
 
-            @foreach($rv as $v)
-            <div class="col-4"> 
-                <a href="/p/{{ $v->post_id }}">
-                   <img src = "/storage/{{ $v->image }}" class="w-100 img-fluid">
-                   <p> {{ $v->title }} </p>
-                </a>
+        @foreach($models as $m)
+            <div class="col-4 pt-3"> 
+                <div class="hovereffect">
+                    <a href="/p/{{ $m['post']->id}}">
+                       <img class="img-responsive" src = "/storage/{{ $m['post']->image }}" class="w-100 img-fluid">
+                       <div class="overlay">
+                         <h2> {{ $m['post']->title }} </h2>
+                        </div>
+                    </a>
+                </div>
             </div>
-            @endforeach
+        @endforeach
 
         </div>
     </div>
