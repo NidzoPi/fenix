@@ -16,6 +16,13 @@
       				<h5> <a href="/profile/{{ $post->user->id }}"> @ {{ $post->user->username }} </a> </h5>
       			</div>
      		 </div>
+         <div class="d-flex align-items-center pt-3">
+            <div> <h6> <b> Naziv akcije: </b>  {{ $post->title }} </h6> </div>
+            <div class="pl-5"> </div>
+            @can ('update', $post)
+             <div class="pl-5 pb-2"> <a href="/p/{{ $post->id }}/edit"> Edituj akciju </a></div>
+            @endcan
+         </div>
 
      		 <hr>
 
@@ -34,7 +41,7 @@
   </div>
 
   <div class="row">
-    <div class="col-4 d-flex">
+    <div class="col-12 d-flex">
       <div> <a href="/{{$post->id}}/h/create"> Dodaj volontera </a> </div>
       <div class="pl-5"> <a href=""> Ko je učestvovao? </a> </div>
     </div>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -5,6 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
+
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -42,56 +46,147 @@
 
             .content {
                 text-align: center;
+                margin-top: 50px;
             }
 
             .title {
                 font-size: 84px;
             }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .pd
+            {
+                padding-bottom: 60px;
+                font-weight: bold;
+            }
+            #volunteerImage
+            {
+                width: 70px;
+                height: 50px;
+            }
+            .logo
+            {
+                width: 100px;
+            }
+            .pd1
+            {
+                padding-top: 100px;
+            }
+            .table
+            {
+              margin-top: 50px;
+            }
+
+            .image 
+            {
+               position:relative;
+               display:inline-block;
+            }
+            .overlay 
+            {
+                display:none;
+                padding-top: 10px;
+            }
+
+        .image:hover .overlay {
+               width:100%;
+               height:100%;
+               background:rgba(0,0,0,.5);
+               position:absolute;
+               top:0;
+               left:0;
+               color: white;
+               font-size: large;
+               cursor: pointer;
+               display:inline-block;
+               -webkit-box-sizing:border-box;
+               -moz-box-sizing:border-box;
+               box-sizing:border-box;
+
+           /* All other styling - see example */
+           img {
+              vertical-align:top;
+           }
+        }
+
+
+
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+
+            <div class="top-right links"> <img class="logo" src="/storage/logo/republic_of_srpska.png"> </div>
 
             <div class="content">
+                <div class="pd d-flex pl-5 align-items-center">
+                    <div class="pl-5"> Organizacija: {{ $sumOfUsers }} </div>
+                    <div class="pl-5"> Akcija: {{ $sumOfPosts }} </div>
+                    <div class="pl-5"> Sati: {{ $sumOfHours }} </div>
+                    <div class="pl-5">  </div>
+                    <div class="pd1 pl-5"> <img id="volunteerImage" src="/storage/volunteers/volunteer.png"> = {{ $sumOfVolunteers }} </div>
+                </div>
+
+
                 <div class="title m-b-md">
                     I mi gradimo Srpsku!
                 </div>
 
                 <div class="links">
-                    <a href="https://blog.laravel.com">Link</a>
-                    <a href="https://nova.laravel.com">Link</a>
-                    <a href="https://forge.laravel.com">Link</a>
-                    <a href="https://vapor.laravel.com">Link</a>
-                    <a href="https://github.com/laravel/laravel">Link</a>
+                    @if (Route::has('login'))
+                    @auth
+                        <a href="/profile/{{Auth::user()->id}}" class="btn btn-danger btn-lg" role="button">MOJ PROFIL</a>
+                        <a href="/v/all" class="btn btn-primary btn-lg" role="button">VOLONTERI</a>
+                    @else
+                        <a class="btn btn-success btn-lg" href="{{ route('login') }}" role="button">Prijava</a>
+                     @if (Route::has('register'))
+                        <a class="btn btn-info btn-lg" href="{{ route('register') }}" role="button">Registracija</a>
+                     @endif
+                    @endauth
+                    @endif
                 </div>
+                <hr>
+                <div class="d-flex align-items-center">
+                    @foreach ($userModels as $model)
+                    <a href="/profile/{{ $model['id'] }}">
+                        <div class="image pl-2">  
+                            <img src = "/storage/{{ $model['image'] ?? '/profile/noimage.jpg'}}" class="rounded-circle w-100" style="max-width: 50px;">
+                            <span class="overlay">{{ $model['title'] }}</span>  
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
+
+             
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Br.</th>
+                  <th scope="col">Ime i prezime</th>
+                  <th scope="col">Broj sati</th>
+                </tr>
+                <tbody>
+                <?php $br=1; ?>
+                    @foreach($takeModels as $m)
+                        <tr>
+                            <th scope="row"> {{ $br++ }} </th>
+                            <td> {{$m['volunteer']->first_and_last_name}} </td>
+                            <td> {{ $m['hours'] }} </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+              </thead>
+          </table>
+          <hr>
+          <h5> Volonteri sa najviše sati </h5>
             </div>
         </div>
+
+  
+
+ 
     </body>
 </html>

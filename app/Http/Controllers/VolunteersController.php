@@ -25,10 +25,11 @@ class VolunteersController extends Controller
        /* $rv = DB::select('select * from posts p inner join hours h 
             on p.id = h.post_id  where h.volunteer_id =' .$volunteer->id.'');*/
         
-
+        $user = Auth::user();
         $postsHours = $volunteer->hours;
 
         $sum = 0;
+        $models = [];
 
         foreach ($postsHours as $pH) {
             $sum+=$pH->hours;
@@ -41,7 +42,7 @@ class VolunteersController extends Controller
 
     	return view('volunteers.show', [
             'models' => $models
-        ])->withSum($sum)->withVolunteer($volunteer);
+        ])->withSum($sum)->withVolunteer($volunteer)->withUser($user);
     }
 
     public function store()
@@ -50,6 +51,9 @@ class VolunteersController extends Controller
 
     		'first_and_last_name' => 'required',
     		'date_of_joining' => 'required',
+            'date_of_born'   => 'required',
+            'jmbg'  => 'required',
+            'rank'  => 'required',
     		'image' => ['required', 'image'],
 
     	]);
@@ -62,6 +66,9 @@ class VolunteersController extends Controller
     	auth()->user()->volunteers()->create([
     		'first_and_last_name' => $data['first_and_last_name'],
     		'date_of_joining' => $data['date_of_joining'],
+            'date_of_born' => $data['date_of_born'],
+            'jmbg' => $data['jmbg'],
+            'rank' => $data['rank'],
     		'image' => $imagePath,
     	]);
 
@@ -92,6 +99,7 @@ class VolunteersController extends Controller
             ];
         }
 
+
         uasort($models, function($a, $b) {
             if ($a['hours'] == $b['hours']) {
                 return 0;
@@ -102,5 +110,53 @@ class VolunteersController extends Controller
         
         return view('volunteers.showAll', ['models' => $models]);
     }
+
+
+    public function edit (Volunteer $volunteer)
+    {
+
+        $user = Auth::user();
+        $this->authorize('update', $volunteer);
+
+
+        return view('volunteers.edit', compact('volunteer'));
+    }
+
+    public function update(Volunteer $volunteer)
+    {
+
+
+        $this->authorize('update', $volunteer);
+
+
+        $data =request()->validate([
+
+            'first_and_last_name' => 'required',
+            'date_of_joining' => 'required',
+            'date_of_born' => 'required',
+            'image' => '',
+
+        ]);
+
+        if (request('image')){
+
+            $imagePath = request('image')->store('volunteers', 'public');
+
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+            $image->save();
+
+            $imageArray = ['image' => $imagePath];
+        }
+
+
+        $volunteer->update(array_merge(
+            $data,
+            $imageArray ?? []
+        ));
+
+        return redirect("/v/{$volunteer->id}");
+
+    }
+
 
 }

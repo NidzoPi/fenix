@@ -14,9 +14,7 @@ use App\Mail\NewUserWelcomeMail;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
 
 Auth::routes();
 
@@ -28,6 +26,8 @@ Route::get('/email', function(){
 Route::get('/p/create', 'PostsController@create');
 Route::get('/p/{post}', 'PostsController@show');
 Route::post('/p', 'PostsController@store');
+Route::get('/p/{post}/edit', 'PostsController@edit');
+Route::patch('/p/{post}', 'PostsController@update');
 
 // Profile
 Route::get('/profile/{user}', 'OrganizationsController@index')->name('profile.show');
@@ -39,6 +39,8 @@ Route::get('/v/create', 'VolunteersController@create');
 Route::get('/v/all', 'VolunteersController@showAll');
 Route::get('/v/{volunteer}', 'VolunteersController@show');
 Route::post('/v', 'VolunteersController@store');
+Route::get('/v/{volunteer}/edit', 'VolunteersController@edit');
+Route::patch('/v/{volunteer}', 'VolunteersController@update');
 
 //Add hours
 Route::get('/{post}/h/create', 'HoursController@create');

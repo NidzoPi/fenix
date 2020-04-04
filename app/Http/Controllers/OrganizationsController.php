@@ -51,8 +51,11 @@ class OrganizationsController extends Controller
     	$data =request()->validate([
 
     		'title' => 'required',
-    		'description' => 'required',
-    		'url' => 'url',
+    		'address' => 'required',
+    		'fbUrl' => 'url',
+            'ytUrl' => 'url',
+            'president' => 'required',
+            'tNumber' => 'required',
     		'image' => '',
 
     	]);

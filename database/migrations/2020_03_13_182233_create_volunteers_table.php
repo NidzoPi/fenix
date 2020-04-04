@@ -17,6 +17,9 @@ class CreateVolunteersTable extends Migration
             $table->id();
             $table->string('first_and_last_name');
             $table->date('date_of_joining');
+            $table->date('date_of_born');
+            $table->unsignedBigInteger('jmbg');
+            $table->string('rank');
             $table->string('image');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

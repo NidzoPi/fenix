@@ -9,7 +9,7 @@
            
 
                 <div class="d-flex pt-2">
-                    <div class="pr-3"><strong> Datum učlanjenja u organizaciju: {{ $volunteer->created_at->format('d.m.Y') }}  </strong></div>
+                    <div class="pr-3"><strong> Datum učlanjenja u organizaciju: {{ date('d.m.Y', strtotime($volunteer->date_of_joining)) }}  </strong></div>
                 </div>
 
 
@@ -20,7 +20,15 @@
 	            		<div> <?php $sumH = 0; ?> Ukupno volonterskih sati: 
 	     				  {{$sum}} </div>
                 		</div>
-              
+
+                @can ('update', $volunteer)        
+                
+                <div> 
+                    <a href="/v/{{ $volunteer->id }}/edit"> Edituj profil </a>
+                </div>
+
+                @endcan
+                
 
         </div>
         <div class="col-3">
@@ -43,7 +51,6 @@
                 </div>
             </div>
         @endforeach
-
         </div>
     </div>
 </div>

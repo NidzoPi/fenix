@@ -8,6 +8,7 @@ use App\Volunteer;
 use App\User;
 use App\Hour;
 use DB;
+use Session;
 
 class HoursController extends Controller
 {
@@ -24,6 +25,15 @@ class HoursController extends Controller
             'volunteer_id' => 'required',
             'hours' => 'required',
         ));
+
+         $hours = Hour::all();
+         foreach ($hours as $h) {
+             if ($h->post_id == $request->post_id && $h->volunteer_id == $request->volunteer_id)
+             {
+            
+                return redirect()->back();
+             }
+         }
 
          $hours = new Hour;
          $hours->post_id = $request->post_id;
