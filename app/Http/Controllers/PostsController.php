@@ -65,7 +65,7 @@ class PostsController extends Controller
         return redirect('/profile/'.auth()->user()->id);
     }
 
-    public function show ( Post $post)
+    public function show (Post $post)
     {
 
     
@@ -76,6 +76,7 @@ class PostsController extends Controller
          foreach ($postHours as $pH) {
              $volunteer = $pH->volunteer;
              $vHours = $volunteer->hours;
+
              foreach ($vHours as $vH) {
                  $sum = $vH->hours;
              }
@@ -84,7 +85,6 @@ class PostsController extends Controller
 
                 'volunteer' => $volunteer,
                 'sum' => $sum,
-
              ];
          }
 

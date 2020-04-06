@@ -75,7 +75,7 @@
                  </div>
                  
                 <div class="form-group row">
-                    <label for="tags" class="col-md-4 col-form-label text-md-right">{{ __('Tagovi') }}</label>
+                    <label for="tags" class="col-md-4 col-form-label text-md-right">{{ __('Komptencije') }}</label>
 
                     <div class="col-md-6">
 
@@ -88,6 +88,7 @@
                         @endforeach
 
                          </select>
+                         <small style="color: red;"> CTRL i lijevi klik miša za selektovanje više</small>
                     </div>
                 </div> 
 

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-9" style="padding-left: 150px;">
+        <div class="col-9">
 
                 <div> <h1> @ {{ $user->username}} </h1></div>
                 <div class="d-flex">
@@ -39,13 +39,15 @@
 
         <div class="row pt-5">
 
-            @foreach($user->posts as $post)
+            @foreach($postsHoursModel as $post)
             <div class="col-4 pt-3"> 
                 <div class="hovereffect">
-                    <a href="/p/{{ $post->id }}">
-                       <img class="img-responsive"  src = "/storage/{{ $post->image }}" class="w-100 img-fluid">
+                    <a href="/p/{{ $post['pId'] }}">
+                       <img class="img-responsive"  src = "/storage/{{ $post['pImage'] }}" class="w-100 img-fluid">
                        <div class="overlay">
-                         <h2> {{ $post->title }} </h2>
+                         <h2> {{ $post['pTitle'] }} </h2>
+                         <p> {{ $post['sumPostHours'] }} </p>
+                         <p> {{ $post['sumVolunteer'] }} </p>
                         </div>
                     </a>
                 </div>

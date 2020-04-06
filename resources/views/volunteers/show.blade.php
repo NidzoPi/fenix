@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-9" style="padding-left: 150px;">
+        <div class="col-9">
 
                 <div> <h1> @ {{ $volunteer->first_and_last_name}} </h1></div>
            
@@ -17,7 +17,7 @@
 
           
                 <div class="d-flex">
-	            		<div> <?php $sumH = 0; ?> Ukupno volonterskih sati: 
+	            		<div>  Ukupno volonterskih sati: 
 	     				  {{$sum}} </div>
                 		</div>
 

@@ -19,19 +19,40 @@ class OrganizationsController extends Controller
 
         $userPosts = $user->posts;
         $sumHours = 0;
+        $postsHoursModel = [];
 
         foreach ($userPosts as $p)
         {
+            $sumPostHours = 0;
+            $sumVolunteer = 0;
+            $pImage = $p->image;
+            $pTitle = $p->title;
+            $pId = $p->id;
+
             $postHours = $p->hours;
+            
+
             foreach ($postHours as $h)
             {
+                $sumVolunteer++;
                 $sumHours+=$h->hours;
+                $sumPostHours+=$h->hours;
             }
+
+            $postsHoursModel[] = [
+                'sumPostHours' => $sumPostHours,
+                'pImage' => $pImage,
+                'pTitle' => $pTitle,
+                'pId' => $pId,
+                'sumVolunteer' => $sumVolunteer,
+            ];
         }
 
 
 
-        return view('profiles.index', compact('user', 'sumHours'));
+        return view('profiles.index',
+            ['postsHoursModel' => $postsHoursModel],
+            compact('user', 'sumHours'));
     }
 
 

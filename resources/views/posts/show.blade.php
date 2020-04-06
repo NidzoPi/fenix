@@ -17,7 +17,8 @@
       			</div>
      		 </div>
          <div class="d-flex align-items-center pt-3">
-            <div> <h6> <b> Naziv akcije: </b>  {{ $post->title }} </h6> </div>
+            <div> <h6> <b> {{ $post->title }} </b> </h6> </div>
+            <div class="pl-5"></div>
             <div class="pl-5"> </div>
             @can ('update', $post)
              <div class="pl-5 pb-2"> <a href="/p/{{ $post->id }}/edit"> Edituj akciju </a></div>

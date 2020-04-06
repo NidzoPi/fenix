@@ -15,6 +15,7 @@
 
         <!-- Styles -->
         <style>
+
             html, body {
                 background-color: #fff;
                 color: #636b6f;
@@ -46,7 +47,7 @@
 
             .content {
                 text-align: center;
-                margin-top: 50px;
+                margin-top: 500px;
             }
 
             .title {
@@ -90,6 +91,7 @@
                 padding-top: 10px;
             }
 
+
         .image:hover .overlay {
                width:100%;
                height:100%;
@@ -109,13 +111,12 @@
            img {
               vertical-align:top;
            }
+
         }
-
-
-
         </style>
     </head>
     <body>
+    <div class="container">
         <div class="flex-center position-ref full-height">
 
 
@@ -144,10 +145,12 @@
                         <a class="btn btn-success btn-lg" href="{{ route('login') }}" role="button">Prijava</a>
                      @if (Route::has('register'))
                         <a class="btn btn-info btn-lg" href="{{ route('register') }}" role="button">Registracija</a>
-                     @endif
+                </div>
+                    <small> Prijava i registracija samo za organizatore volonterskih akcija! </small>
+                    @endif
                     @endauth
                     @endif
-                </div>
+                
                 <hr>
                 <div class="d-flex align-items-center">
                     @foreach ($userModels as $model)
@@ -165,6 +168,7 @@
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">Br.</th>
+                  <th scope="col">Organizacija</th>
                   <th scope="col">Ime i prezime</th>
                   <th scope="col">Broj sati</th>
                 </tr>
@@ -172,8 +176,9 @@
                 <?php $br=1; ?>
                     @foreach($takeModels as $m)
                         <tr>
-                            <th scope="row"> {{ $br++ }} </th>
-                            <td> {{$m['volunteer']->first_and_last_name}} </td>
+                            <th scope="row"> {{ $br++ }}. </th>
+                            <td style="text-align: left;"><a href="/profile/{{ $m['userId'] }}"> <img style="width: 30px;" src="/storage/{{$m['userProfileImage']}}"> {{ $m['userName'] }} </a> </td>
+                            <td > <a href="/v/{{ $m['volunteer']->id }}">  {{ $m['volunteer']->first_and_last_name }} </a>  </td>
                             <td> {{ $m['hours'] }} </td>
                         </tr>
                     @endforeach
@@ -181,10 +186,34 @@
               </thead>
           </table>
           <hr>
-          <h5> Volonteri sa najviše sati </h5>
+          <h5>  Volonteri sa najviše sati (TOP 10) </h5> <br>
+          <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Br.</th>
+                  <th scope="col">Organizacija</th>
+                  <th scope="col">Broj akcija</th>
+                  <th scope="col">Broj sati</th>
+                </tr>
+                <tbody>
+                    <?php $br=1; ?>
+                    @foreach($takeOrgHours as $orgHour)
+                    <tr>
+                        <th scope="row"> {{ $br++ }}. </th>
+                        <td style="text-align: left;"> <a id="aNoneDecoration" href="/profile/{{ $orgHour['userId'] }}">  <img style="width: 30px;" src="/storage/{{ $orgHour['userImage'] }}"> {{ $orgHour['userName'] }} </a> </td>
+                        <td> {{ $orgHour['postSum'] }} </td>
+                        <td> {{ $orgHour['sumOrgHours']}} </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </thead>
+        </table>
+                <hr>
+                  <h5>  Organizacije sa najviše sati (TOP 5) </h5>
+
             </div>
         </div>
-
+      </div>
   
 
  
