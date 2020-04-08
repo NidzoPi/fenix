@@ -73,7 +73,7 @@
             }
             .pd1
             {
-                padding-top: 100px;
+                padding-top: 65px;
             }
             .table
             {
@@ -90,6 +90,7 @@
                 display:none;
                 padding-top: 10px;
             }
+
 
 
         .image:hover .overlay {
@@ -116,48 +117,59 @@
         </style>
     </head>
     <body>
-    <div class="container">
-        <div class="flex-center position-ref full-height">
+    <div class="container h-100">
+        <div class="row">
+            <div class="col-9 pd d-flex pl-5 justify-content-center pt-5">
+              <div class="pl-5"> Organizacija: {{ $sumOfUsers }} </div>
+              <div class="pl-5"> Akcija: {{ $sumOfPosts }} </div>
+              <div class="pl-5"> Sati: {{ $sumOfHours }} </div>
+              <div class="pd1 pl-1"> <img id="volunteerImage" src="/storage/volunteers/volunteer.png"> = {{ $sumOfVolunteers }} </div>
+            </div>
+            <div class="col-3">
+              <img class="logo" src="/storage/logo/republic_of_srpska.png">
+            </div>
+          </div>
 
 
-            <div class="top-right links"> <img class="logo" src="/storage/logo/republic_of_srpska.png"> </div>
-
-            <div class="content">
-                <div class="pd d-flex pl-5 align-items-center">
-                    <div class="pl-5"> Organizacija: {{ $sumOfUsers }} </div>
-                    <div class="pl-5"> Akcija: {{ $sumOfPosts }} </div>
-                    <div class="pl-5"> Sati: {{ $sumOfHours }} </div>
-                    <div class="pl-5">  </div>
-                    <div class="pd1 pl-5"> <img id="volunteerImage" src="/storage/volunteers/volunteer.png"> = {{ $sumOfVolunteers }} </div>
+                <div class="row">
+                  <div class="col-12 d-flex justify-content-center pl-5">
+                     <h1> I mi gradimo Srpsku! </h1>
+                  </div>
                 </div>
 
-
-                <div class="title m-b-md">
-                    I mi gradimo Srpsku!
-                </div>
-
-                <div class="links">
+                
+                <div class="row pt-3">
+                  <div class="col-12 d-flex justify-content-center">
                     @if (Route::has('login'))
                     @auth
-                        <a href="/profile/{{Auth::user()->id}}" class="btn btn-danger btn-lg" role="button">MOJ PROFIL</a>
-                        <a href="/v/all" class="btn btn-primary btn-lg" role="button">VOLONTERI</a>
+                       <div> <a href="/profile/{{Auth::user()->id}}" class="btn btn-danger btn-lg" role="button">MOJ PROFIL</a> </div>
+                       <div class="pl-2"> <a href="/v/all" class="btn btn-primary btn-lg" role="button">VOLONTERI</a> </div>
                     @else
-                        <a class="btn btn-success btn-lg" href="{{ route('login') }}" role="button">Prijava</a>
+                        <div> <a class="btn btn-success btn-lg" href="{{ route('login') }}" role="button">Prijava</a> </div>
                      @if (Route::has('register'))
-                        <a class="btn btn-info btn-lg" href="{{ route('register') }}" role="button">Registracija</a>
+                       <div class="pl-2"> <a class="btn btn-info btn-lg" href="{{ route('register') }}" role="button">Registracija</a> </div>
+                     @endif
+                     @endauth
+                     @endif
+                  </div>
                 </div>
-                    <small> Prijava i registracija samo za organizatore volonterskih akcija! </small>
-                    @endif
-                    @endauth
-                    @endif
-                
+
+                  @if (Route::has('login'))
+                  @auth
+                  @else
+                  @if (Route::has('register')) 
+                    <center> <small> Registracija i prijava samo za organizatore volontiranja! @endif </small> </center>
+                  @endauth
+                  @endif
+                   
                 <hr>
+
                 <div class="d-flex align-items-center">
                     @foreach ($userModels as $model)
                     <a href="/profile/{{ $model['id'] }}">
                         <div class="image pl-2">  
                             <img src = "/storage/{{ $model['image'] ?? '/profile/noimage.jpg'}}" class="rounded-circle w-100" style="max-width: 50px;">
-                            <span class="overlay">{{ $model['title'] }}</span>  
+                           <center> <span class="overlay">{{ $model['title'] }}</span> </center>
                         </div>
                     </a>
                     @endforeach
@@ -177,7 +189,7 @@
                     @foreach($takeModels as $m)
                         <tr>
                             <th scope="row"> {{ $br++ }}. </th>
-                            <td style="text-align: left;"><a href="/profile/{{ $m['userId'] }}"> <img style="width: 30px;" src="/storage/{{$m['userProfileImage']}}"> {{ $m['userName'] }} </a> </td>
+                            <td style="text-align: left;"><a href="/profile/{{ $m['userId'] }}"> <img style="width: 30px;" src="/storage/{{$m['userProfileImage'] ?? '/profile/noimage.jpg'}}"> {{ $m['userName'] }} </a> </td>
                             <td > <a href="/v/{{ $m['volunteer']->id }}">  {{ $m['volunteer']->first_and_last_name }} </a>  </td>
                             <td> {{ $m['hours'] }} </td>
                         </tr>
@@ -186,7 +198,8 @@
               </thead>
           </table>
           <hr>
-          <h5>  Volonteri sa najviše sati (TOP 10) </h5> <br>
+          <center> <h5>  Volonteri sa najviše sati (TOP 10) </h5> </center> 
+          <br>
           <table class="table">
               <thead class="thead-dark">
                 <tr>
@@ -200,7 +213,7 @@
                     @foreach($takeOrgHours as $orgHour)
                     <tr>
                         <th scope="row"> {{ $br++ }}. </th>
-                        <td style="text-align: left;"> <a id="aNoneDecoration" href="/profile/{{ $orgHour['userId'] }}">  <img style="width: 30px;" src="/storage/{{ $orgHour['userImage'] }}"> {{ $orgHour['userName'] }} </a> </td>
+                        <td style="text-align: left;"> <a id="aNoneDecoration" href="/profile/{{ $orgHour['userId'] }}">  <img style="width: 30px;" src="/storage/{{ $orgHour['userImage'] ?? '/profile/noimage.jpg' }}"> {{ $orgHour['userName'] }} </a> </td>
                         <td> {{ $orgHour['postSum'] }} </td>
                         <td> {{ $orgHour['sumOrgHours']}} </td>
                     </tr>
@@ -209,11 +222,11 @@
             </thead>
         </table>
                 <hr>
-                  <h5>  Organizacije sa najviše sati (TOP 5) </h5>
+                  <center> <h5>  Organizacije sa najviše sati (TOP 5) </h5> </center>
 
             </div>
         </div>
-      </div>
+
   
 
  

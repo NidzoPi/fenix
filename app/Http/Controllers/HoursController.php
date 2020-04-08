@@ -30,7 +30,7 @@ class HoursController extends Controller
          foreach ($hours as $h) {
              if ($h->post_id == $request->post_id && $h->volunteer_id == $request->volunteer_id)
              {
-            
+                Session::flash('error', 'Taj volonter već ima učešće u akciji / projektu.');
                 return redirect()->back();
              }
          }
@@ -41,10 +41,18 @@ class HoursController extends Controller
          $hours->hours = $request->hours;
          $hours->save();
 
-    	return redirect('/p/'.$hours->post_id);
+        Session::flash('success', 'Uspješno ste dodali volonteru učešće u akciji / projektu.');
+
+        return redirect()->back();
+    	//return redirect('/p/'.$hours->post_id);
     }
 
+    public function destroy(Hour $hour)
+    {
+        $hour->delete();
 
-
+        Session::flash('success', 'Uspješno ste obrisali sate volonteru.');
+        return redirect()->back();
+    }
 
 }

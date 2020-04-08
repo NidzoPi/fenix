@@ -10,12 +10,43 @@ use App\Post;
 use App\Volunteer;
 use App\Tag;
 use Auth;
+use Session;
+
 
 class PostsController extends Controller
 {
     public function __construct()
     {
     	
+    }
+
+    public function showUploadImages($postId)
+    {
+        $post = Post::find($postId);
+        $postImages = $post->images;
+
+        return view('images.upload')->withPost($post)->withPostImages($postImages);
+
+    }
+
+    public function uploadImages(Post $post, Request $request)
+    {
+       $image = $request->file('file');
+
+       if ($image)
+       {
+        $imageName = time() . '-' . $image->getClientOriginalName();
+      //  
+
+        $image->move('images', $imageName);
+        $imagePath = "images/$imageName";
+
+        $imagee = Image::make(sprintf('images/%s', $imageName))->resize(1200, 720)->save();
+
+        $post->images()->create(['image_path' => $imagePath]);
+       }
+
+       return "done";
     }
 
     public function create()
@@ -62,7 +93,10 @@ class PostsController extends Controller
 
         $post->tags()->sync($request->tags, false);
 
+        Session::flash('success', 'Uspješno ste napravili akciju / projekat!');
+
         return redirect('/profile/'.auth()->user()->id);
+        
     }
 
     public function show (Post $post)
@@ -76,7 +110,9 @@ class PostsController extends Controller
          foreach ($postHours as $pH) {
              $volunteer = $pH->volunteer;
              $vHours = $volunteer->hours;
-
+             $user = $volunteer->user->name;
+             $userImage =  $volunteer->user->profile->image;
+          
              foreach ($vHours as $vH) {
                  $sum = $vH->hours;
              }
@@ -85,6 +121,9 @@ class PostsController extends Controller
 
                 'volunteer' => $volunteer,
                 'sum' => $sum,
+                'user' => $user,
+                'userImage' => $userImage,
+                'hours' => $pH,
              ];
          }
 
@@ -159,6 +198,7 @@ class PostsController extends Controller
             $post->tags()->sync(array());
         }
 
+        Session::flash('success', 'Uspješno ste uredili akciju / projekat! Možete nastaviti dalje sa aktivnostima.');
         return redirect('/p/'.$post->id);
     }
 }

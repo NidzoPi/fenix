@@ -97,7 +97,7 @@
                     <label for="place" class="col-md-4 col-form-label text-md-right">{{ __('Mjesto') }}</label>
 
                         <div class="col-md-6">
-                            <input id="place" type="text" class="form-control @error('place') is-invalid @enderror" name="place" value="{{ old('place') }}" required autocomplete="place" autofocus>
+                            <input id="place" type="text" class="form-control @error('place') is-invalid @enderror" name="place" value="{{ auth()->user()->profile->place }}" required autocomplete="place" autofocus>
 
                             @error('place')
                                 <span class="invalid-feedback" role="alert">

@@ -41,8 +41,14 @@ Route::get('/v/{volunteer}', 'VolunteersController@show');
 Route::post('/v', 'VolunteersController@store');
 Route::get('/v/{volunteer}/edit', 'VolunteersController@edit');
 Route::patch('/v/{volunteer}', 'VolunteersController@update');
+Route::delete('/v/delete/{volunteer}', 'VolunteersController@destroy');
 
 //Add hours
 Route::get('/{post}/h/create', 'HoursController@create');
 Route::post('/h', 'HoursController@store');
+Route::delete('/h/delete/{hour}', 'HoursController@destroy');
 //Route::get('/h/v', 'HoursController@showInAction');
+
+// For images
+Route::get('/p/image-upload/{post}', 'PostsController@showUploadImages');
+Route::post('/p/image-upload/{post}', 'PostsController@uploadImages');

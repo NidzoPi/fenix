@@ -7,6 +7,7 @@ use App\User;
 use Intervention\Image\Facades\Image;
 use DB;
 use App\Hours;
+use Session;
 
 class OrganizationsController extends Controller
 {
@@ -73,8 +74,9 @@ class OrganizationsController extends Controller
 
     		'title' => 'required',
     		'address' => 'required',
-    		'fbUrl' => 'url',
-            'ytUrl' => 'url',
+            'place' => 'required',
+    		'fbUrl' => 'nullable|url',
+            'ytUrl' => 'nullable|url',
             'president' => 'required',
             'tNumber' => 'required',
     		'image' => '',
@@ -96,6 +98,8 @@ class OrganizationsController extends Controller
     		$imageArray ?? []
 	 	));
 
+        Session::flash('success', 'Uspješno ste uredili informacije o organizaciji! Nadamo se da ćete imati mnogo uspjeha.');
+        
     	return redirect("/profile/{$user->id}");
 
     }

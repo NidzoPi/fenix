@@ -3,7 +3,6 @@
 @section('content')
 <div class="container">
 
-
 <form action="/p/{{ $post->id }}" enctype="multipart/form-data" method="post">
       @csrf
       @method('PATCH')

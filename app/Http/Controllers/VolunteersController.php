@@ -8,6 +8,8 @@ use Intervention\Image\Facades\Image;
 use App\User;
 use DB;
 use Auth;
+use Session;
+use Storage;
 
 class VolunteersController extends Controller
 {
@@ -33,10 +35,12 @@ class VolunteersController extends Controller
 
         foreach ($postsHours as $pH) {
             $sum+=$pH->hours;
-            $post = $pH->post;            
+            $post = $pH->post;
+            $hours = $pH->hours;            
 
              $models[] = [
                 'post' => $post,
+                'hours'=> $hours,
             ];
         }
 
@@ -72,7 +76,9 @@ class VolunteersController extends Controller
     		'image' => $imagePath,
     	]);
 
-    	return redirect('/profile/'.auth()->user()->id);
+        Session::flash('success', 'Uspješno ste dodali volontera! Nadamo se da će broj biti sve veći.');
+        return redirect()->back();
+    	//return redirect('/profile/'.auth()->user()->id);
     }
 
     public function showAll ()
@@ -154,9 +160,25 @@ class VolunteersController extends Controller
             $imageArray ?? []
         ));
 
+        Session::flash('success', 'Uspješno ste uredili informacije o volonteru!');
         return redirect("/v/{$volunteer->id}");
 
     }
 
+    public function destroy(Volunteer $volunteer)
+    {
+        //$path = asset('/storage/app/public/volunteers/{{$volunteer->image}}');
+        //$path = public_path("storage/{$volunteer->image}");
+        //  dd(storage_path('/app/public/'.$volunteer->image));
+        // Storage::delete($path);
+
+        $volunteer->hours()->delete();
+        unlink(storage_path('/app/public/'.$volunteer->image));
+        $volunteer->delete();
+
+        Session::flash('success', 'Uspješno ste obrisali volontera iz baze!');
+        return redirect('/v/all');
+
+    }
 
 }
