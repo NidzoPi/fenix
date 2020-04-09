@@ -11,6 +11,8 @@ use App\Volunteer;
 use App\Tag;
 use Auth;
 use Session;
+use Storage;
+use App\PostImage;
 
 
 class PostsController extends Controller
@@ -22,7 +24,10 @@ class PostsController extends Controller
 
     public function showUploadImages($postId)
     {
+
         $post = Post::find($postId);
+        $this->authorize('update', $post);
+
         $postImages = $post->images;
 
         return view('images.upload')->withPost($post)->withPostImages($postImages);
@@ -31,6 +36,7 @@ class PostsController extends Controller
 
     public function uploadImages(Post $post, Request $request)
     {
+        $this->authorize('update', $post);
        $image = $request->file('file');
 
        if ($image)
@@ -43,10 +49,26 @@ class PostsController extends Controller
 
         $imagee = Image::make(sprintf('images/%s', $imageName))->resize(1200, 720)->save();
 
-        $post->images()->create(['image_path' => $imagePath]);
+        $imggg = $post->images()->create(['image_path' => $imagePath]);
        }
+     
 
-       return "done";
+       return $imggg;
+    }
+
+    public function deleteImage($postId, $imageId)
+    {
+        $post = Post::find($postId);
+        $this->authorize('update', $post);
+        
+        $image = PostImage::find($imageId);
+        //Storage::delete($image->image_path);
+       unlink(public_path($image->image_path));
+        
+        $image -> delete();
+        
+        Session::flash('success', 'Slika je uspješno obrisana');
+        return redirect()->back();
     }
 
     public function create()
@@ -200,5 +222,22 @@ class PostsController extends Controller
 
         Session::flash('success', 'Uspješno ste uredili akciju / projekat! Možete nastaviti dalje sa aktivnostima.');
         return redirect('/p/'.$post->id);
+    }
+
+    public function destroy(Post $post)
+    {
+         $post->tags()->detach();
+         $post->hours()->delete();
+
+         foreach($post->images as $image){
+           unlink(public_path($image->image_path));
+        }
+
+        $post->images()->delete();
+        unlink(storage_path('/app/public/'.$post->image));
+        $post->delete();
+
+        Session::flash('success', 'Uspješno ste obrisali akciju / projekat.');
+        return redirect('/profile/'.auth()->user()->id);
     }
 }

@@ -41,7 +41,7 @@
                         <form action="/v/delete/{{ $volunteer->id }}" method="POST">
                         @csrf
                         @method('delete')
-                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        <button type="submit" class="btn btn-outline-danger">Obriši profil volontera</button>
                         </form>
                     </div>
                 </div>

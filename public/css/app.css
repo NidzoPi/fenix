@@ -18,6 +18,25 @@
 
 /*My CSS code*/
 
+/* For images thumbnail and gallery */
+
+.btn:focus, .btn:active, button:focus, button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#image-gallery .modal-footer{
+  display: block;
+}
+
+.thumb{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+
+/* End */
+
 #overlayImage
 {
   width: 50px;

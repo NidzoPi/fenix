@@ -28,6 +28,7 @@ Route::get('/p/{post}', 'PostsController@show');
 Route::post('/p', 'PostsController@store');
 Route::get('/p/{post}/edit', 'PostsController@edit');
 Route::patch('/p/{post}', 'PostsController@update');
+Route::delete('/p/delete/{post}', 'PostsController@destroy');
 
 // Profile
 Route::get('/profile/{user}', 'OrganizationsController@index')->name('profile.show');
@@ -52,3 +53,4 @@ Route::delete('/h/delete/{hour}', 'HoursController@destroy');
 // For images
 Route::get('/p/image-upload/{post}', 'PostsController@showUploadImages');
 Route::post('/p/image-upload/{post}', 'PostsController@uploadImages');
+Route::get('p/delete-image/{post}/{postImage}', 'PostsController@deleteImage');
