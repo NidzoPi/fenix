@@ -8,6 +8,7 @@ use App\Hour;
 use App\Volunteer;
 use App\User;
 use App\Profile;
+use DB;
 
 class WelcomeController extends Controller
 {
@@ -25,7 +26,7 @@ class WelcomeController extends Controller
             $sum = 0;
             $userName = $volunteer->user->name;
             $userProfileImage = $volunteer->user->profile->image;
-            $userId = $volunteer->user->id;
+            $userUserName = $volunteer->user->username;
             
             
             foreach ($posts as $post) {
@@ -37,7 +38,7 @@ class WelcomeController extends Controller
                 'hours' => $sum,
                 'userName' => $userName,
                 'userProfileImage' => $userProfileImage,
-                'userId' => $userId,
+                'userUserName' => $userUserName,
             ];
         }
 
@@ -77,12 +78,12 @@ class WelcomeController extends Controller
   			$u = $user->profile;
   			$image = $u->image;
         $title = $u->title;
-        $id = $u->id;
+        $userName = $user->username;
 
   			$userModels[] = [
   				'image' => $image,
           'title' => $title,
-          'id'    => $id,
+          'userName' => $userName,
   			];
   			
   		}
@@ -99,7 +100,7 @@ class WelcomeController extends Controller
         $userName = $user->name;
         $userPosts = $user->posts;
         $postSum = 0;
-        $userId = $user->id;
+        $userUserName = $user->username;
 
         foreach ($userPosts as $post) {
           $postSum ++;
@@ -131,7 +132,7 @@ class WelcomeController extends Controller
           'userImage' => $userImage,
           'userName' => $userName,
           'postSum' => $postSum,
-          'userId' => $userId,
+          'userUserName' => $userUserName,
          ];
       
       }
@@ -155,5 +156,20 @@ class WelcomeController extends Controller
             'takeOrgHours' => $takeOrgHours,
           ], 
           compact('sumOfPosts', 'sumOfHours', 'sumOfUsers', 'sumOfVolunteers', 'user'));
+    }
+
+    public function search (Request $request){
+   
+      $request->validate([
+        'search' => 'required|min:3|max:30',
+      ]);
+
+      $query =  request()->input('search');
+      //$users = DB::table('users')->where('name', 'like', '%' .$query. '%')->get();
+      $users = User::where('name', 'like', "%$query%")->paginate(7);
+
+
+      return view ('search.search-results', ['users' => $users]);
+
     }
 }

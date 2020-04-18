@@ -42,27 +42,26 @@
 
         @can('update', $user->profile)
                 <div class="d-flex pt-3">
-                    <div class="pt-3"> <a class="btn btn-outline-primary" href="/p/create"> Dodaj akciju </a> </div>
-                    <div class="pt-3 pl-4"> <a class="btn btn-outline-primary" href="/profile/{{ $user->id }}/edit"> Edituj profil </a> </div>
-                    <div class="pt-3 pl-4"> <a class="btn btn-outline-primary" href="/v/create"> Dodaj volontera </a> </div>
-                     <div class="pt-3 pl-4"> <a class="btn btn-outline-primary" href="/v/all"> Prikaži volontere </a> </div>
+                    <div class="pt-3 pr-2"> <a class="btn btn-outline-primary" href="/p/create"> Dodaj akciju </a> </div>
+                    <div class="pt-3 pr-2"> <a class="btn btn-outline-primary" href="/profile/{{ $user->id }}/edit"> Edituj profil </a> </div>
+                    <div class="pt-3 pr-2"> <a class="btn btn-outline-primary" href="/v/create"> Dodaj volontera </a> </div>
+                     <div class="pt-3"> <a class="btn btn-outline-primary" href="/v/all"> Prikaži volontere </a> </div>
                 </div>
         @endcan
 
         </div>
+
         <div class="col-3">
-
                 <img src="{{ $user->profile->profileImage() }}" class="img-fluid rounded-circle w-100">
-
         </div>
 
-        <div class="row pt-5">
+        <div class="row pt-5 pl-4" style="width: 100%;">
 
             @foreach($postsHoursModel as $post)
             <div class="col-sm-4 pt-3"> 
                 <div class="hovereffect">
-                    <a href="/p/{{ $post['pId'] }}">
-                       <img class="img-responsive img-fluid"  src = "/storage/{{ $post['pImage'] }}" class="w-100 img-fluid">
+                    <a href="/p/{{ $post['pSlug'] }}">
+                       <img class="img-responsive"  src = "/storage/{{ $post['pImage'] }}">
                        <div class="overlay">
                          <h2> {{ $post['pTitle'] }} </h2>
                          <div class="d-flex justify-content-center" style="background-color: white;">

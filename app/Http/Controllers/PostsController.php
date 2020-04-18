@@ -13,6 +13,7 @@ use Auth;
 use Session;
 use Storage;
 use App\PostImage;
+use Illuminate\Support\Str;
 
 
 class PostsController extends Controller
@@ -101,9 +102,13 @@ class PostsController extends Controller
         // Store
 
         $post = new Post;
-
+     
     	
     	$post->title = $request->title;
+        $modifiedTitle = strtolower(str_replace(' ', '-', $post->title));
+        $post->slug  = auth()->user()->username.'-'.$modifiedTitle;
+        $ifTitleExsist = Post::where('slug', '=', $post->slug)->first();
+        if ($ifTitleExsist != null){  $post->slug  = auth()->user()->username.'-'.$modifiedTitle.rand(1,1000); }
     	$post->description = $request->description;
         $post->startDate = $request->startDate;
         $post->endDate = $request->endDate;
@@ -117,13 +122,13 @@ class PostsController extends Controller
 
         Session::flash('success', 'Uspješno ste napravili akciju / projekat!');
 
-        return redirect('/profile/'.auth()->user()->id);
+        return redirect('/profile/'.auth()->user()->username);
         
     }
 
-    public function show (Post $post)
+    public function show ($postSlug)
     {
-
+        $post = Post::where('slug', '=', $postSlug)->first();
     
          $postHours = $post->hours;
          $models = [];
@@ -221,11 +226,14 @@ class PostsController extends Controller
         }
 
         Session::flash('success', 'Uspješno ste uredili akciju / projekat! Možete nastaviti dalje sa aktivnostima.');
-        return redirect('/p/'.$post->id);
+        return redirect('/p/'.$post->slug);
     }
 
     public function destroy(Post $post)
     {
+
+        $this->authorize('update', $post);
+        
          $post->tags()->detach();
          $post->hours()->delete();
 
@@ -238,6 +246,7 @@ class PostsController extends Controller
         $post->delete();
 
         Session::flash('success', 'Uspješno ste obrisali akciju / projekat.');
-        return redirect('/profile/'.auth()->user()->id);
+        return redirect('/profile/'.auth()->user()->username);
     }
+
 }

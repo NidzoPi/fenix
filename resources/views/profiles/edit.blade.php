@@ -57,7 +57,7 @@
                     <label for="fbUrl" class="col-md-4 col-form-label text-md-right">{{ __('Facebook link') }}</label>
 
                             <div class="col-md-6">
-                                <input id="fbUrl" type="text" class="form-control @error('fbUrl') is-invalid @enderror" name="fbUrl" value="{{ old('fbUrl') ??  $user->profile->fbUrl }}"  autocomplete="fbUrl" rows="10"> 
+                                <input id="fbUrl" type="text" class="form-control @error('fbUrl') is-invalid @enderror" name="fbUrl" value="{{ old('fbUrl') ??  $user->profile->fbUrl }}"  autocomplete="fbUrl" rows="10" placeholder="Opciono"> 
 
                                 @error('fbUrl')
                                     <span class="invalid-feedback" role="alert">
@@ -71,7 +71,7 @@
                     <label for="ytUrl" class="col-md-4 col-form-label text-md-right">{{ __('Youtube link') }}</label>
 
                             <div class="col-md-6">
-                                <input id="ytUrl" type="text" class="form-control @error('ytUrl') is-invalid @enderror" name="ytUrl" value="{{ old('ytUrl') ??  $user->profile->ytUrl }}"  autocomplete="ytUrl" rows="10"> 
+                                <input id="ytUrl" type="text" class="form-control @error('ytUrl') is-invalid @enderror" name="ytUrl" value="{{ old('ytUrl') ??  $user->profile->ytUrl }}"  autocomplete="ytUrl" rows="10" placeholder="Opciono"> 
 
                                 @error('ytUrl')
                                     <span class="invalid-feedback" role="alert">

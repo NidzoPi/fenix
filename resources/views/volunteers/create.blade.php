@@ -11,23 +11,30 @@
 
   <form action="/v" enctype="multipart/form-data" method="post">
     @csrf
-    <div class="col-8 offset-2">
 
+
+
+       <div class="col-8 offset-2">
               <div class="form-group row pt-2">
-                    
-                    <label for="first_and_last_name" class="col-md-4 col-form-label text-md-right">{{ __('Ime i prezime volontera') }}</label>
+                    <a href = "/profile/{{ auth()->user()->username }}" class="btn btn-secondary btn-sm"> Nazad na profil </a>    
+              </div>
+        </div>
 
-                        <div class="col-md-6">
-                            <input id="first_and_last_name" type="text" class="form-control  @error('first_and_last_name') is-invalid @enderror" name="first_and_last_name" value="{{ old('first_and_last_name') }}" required autocomplete="first_and_last_name" autofocus>
 
-                            @error('title')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                      
-                        </div>
-                 </div>
+              <div class="col-8 offset-2">
+                    <div class="form-group row pt-2">
+                          <label for="first_and_last_name" class="col-md-4 col-form-label text-md-right">{{ __('Ime i prezime volontera') }}</label>
+
+                              <div class="col-md-6">
+                                  <input id="first_and_last_name" type="text" class="form-control  @error('first_and_last_name') is-invalid @enderror" name="first_and_last_name" value="{{ old('first_and_last_name') }}" required autocomplete="first_and_last_name" autofocus>
+
+                                  @error('title')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror 
+                       </div>
+                </div>
 
 
 

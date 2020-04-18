@@ -11,12 +11,13 @@ use Session;
 
 class OrganizationsController extends Controller
 {
-   public function index(User $user)
+   public function index($username)
     {
     
       /*  $rv = DB::select('select hours from hours h 
             inner join posts p on h.post_id = p.id
             where p.user_id = '. $user->id); */
+        $user = User::where('username', '=', $username)->first();
 
         $userPosts = $user->posts;
         $sumHours = 0;
@@ -28,7 +29,7 @@ class OrganizationsController extends Controller
             $sumVolunteer = 0;
             $pImage = $p->image;
             $pTitle = $p->title;
-            $pId = $p->id;
+            $pSlug = $p->slug;
 
             $postHours = $p->hours;
             
@@ -44,7 +45,7 @@ class OrganizationsController extends Controller
                 'sumPostHours' => $sumPostHours,
                 'pImage' => $pImage,
                 'pTitle' => $pTitle,
-                'pId' => $pId,
+                'pSlug' => $pSlug,
                 'sumVolunteer' => $sumVolunteer,
             ];
         }
@@ -100,7 +101,7 @@ class OrganizationsController extends Controller
 
         Session::flash('success', 'Uspješno ste uredili informacije o organizaciji! Nadamo se da ćete imati mnogo uspjeha.');
         
-    	return redirect("/profile/{$user->id}");
+    	return redirect("/profile/".auth()->user()->username);
 
     }
 

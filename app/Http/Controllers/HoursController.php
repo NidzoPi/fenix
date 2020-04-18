@@ -12,6 +12,10 @@ use Session;
 
 class HoursController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
 	public function create (User $user, Post $post)
 	{
@@ -26,6 +30,22 @@ class HoursController extends Controller
             'hours' => 'required',
         ));
 
+         $volunteers = auth()->user()->volunteers;
+         $br = 0;
+
+         foreach($volunteers as $volunteer)
+         {
+            if($volunteer->id == $request->volunteer_id)
+            {
+              $br++;
+            }   
+            if ($br < 1) 
+            {
+              Session::flash('error', 'Taj volonter se ne nalazi u tvojoj organizaciji.');
+              return redirect()->back();
+            }
+         }
+
          $hours = Hour::all();
          foreach ($hours as $h) {
              if ($h->post_id == $request->post_id && $h->volunteer_id == $request->volunteer_id)
@@ -34,6 +54,8 @@ class HoursController extends Controller
                 return redirect()->back();
              }
          }
+
+       
 
          $hours = new Hour;
          $hours->post_id = $request->post_id;
@@ -49,6 +71,9 @@ class HoursController extends Controller
 
     public function destroy(Hour $hour)
     {
+
+       // dd($hour->post);
+        $this->authorize('update', $hour->post);
         $hour->delete();
 
         Session::flash('success', 'Uspješno ste obrisali sate volonteru.');

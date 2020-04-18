@@ -17,11 +17,14 @@
     @csrf
     <div class="col-8 offset-2">
 
+                  <div class="form-group row pt-2">
+                        <div class="col-md-6">
+                          <a href="/p/{{ $post->slug }}" class="btn btn-secondary btn-sm"> Nazad na akciju  </a>
+                        </div>
+                  </div>
 
 
               <div class="form-group row pt-2">
-
-
                         <div class="col-md-6">
                             <input hidden="" id="post_id" type="text" class="form-control @error('post_id') is-invalid @enderror" name="post_id" value="{{ $post->id }}" required autocomplete="title" autofocus>
 

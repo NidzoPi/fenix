@@ -171,6 +171,7 @@ class VolunteersController extends Controller
         //$path = public_path("storage/{$volunteer->image}");
         //  dd(storage_path('/app/public/'.$volunteer->image));
         // Storage::delete($path);
+         $this->authorize('update', $volunteer);
 
         $volunteer->hours()->delete();
         unlink(storage_path('/app/public/'.$volunteer->image));

@@ -130,7 +130,7 @@ $(document)
         				<img src="{{ $post->user->profile->profileImage() }}" class="rounded-circle w-100" style="max-width: 50px;">
         			</div>
         			<div class="pl-3">
-        				<h5> <a href="/profile/{{ $post->user->id }}"> @ {{ $post->user->username }} </a> </h5>
+        				<h5> <a href="/profile/{{ $post->user->username }}"> @ {{ $post->user->username }} </a> </h5>
         			</div>
      		  </div>
 
@@ -159,7 +159,7 @@ $(document)
 
 
      		 <div class="pt-1">
-        		<p> {{ $post->description }}</p>
+        		<p align="justify" style="text-indent: 30px;"> {{ $post->description }}</p>
         	</div>
 
     	</div>
@@ -245,7 +245,7 @@ $(document)
                         <form action="/h/delete/{{ $m['hours']->id }}" method="POST">
                         @csrf
                         @method('delete')
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Obriši</button>
                         </form> 
                     @endcan   
                     </td>
