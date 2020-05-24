@@ -25,12 +25,14 @@ class HoursController extends Controller
 	public function store(Request $request)
     {
     	 $this->validate($request, array(
-            'post_id' => 'required',
-            'volunteer_id' => 'required',
-            'hours' => 'required',
+            'post_id' => 'required|integer',
+            'volunteer_id' => 'required|integer',
+            'hours' => 'required|numeric|max:300',
         ));
 
-         $volunteers = auth()->user()->volunteers;
+         // Ovaj kod ne radi kako sad zamislio, moracu da se angazujem.
+
+      /*   $volunteers = auth()->user()->volunteers;
          $br = 0;
 
          foreach($volunteers as $volunteer)
@@ -44,7 +46,7 @@ class HoursController extends Controller
               Session::flash('error', 'Taj volonter se ne nalazi u tvojoj organizaciji.');
               return redirect()->back();
             }
-         }
+         } */
 
          $hours = Hour::all();
          foreach ($hours as $h) {

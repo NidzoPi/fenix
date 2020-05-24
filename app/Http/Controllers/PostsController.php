@@ -105,7 +105,8 @@ class PostsController extends Controller
      
     	
     	$post->title = $request->title;
-        $modifiedTitle = strtolower(str_replace(' ', '-', $post->title));
+        $notOurTitle = iconv("UTF-8", "ASCII//TRANSLIT", $post->title);
+        $modifiedTitle = strtolower(str_replace(' ', '-', $notOurTitle));
         $post->slug  = auth()->user()->username.'-'.$modifiedTitle;
         $ifTitleExsist = Post::where('slug', '=', $post->slug)->first();
         if ($ifTitleExsist != null){  $post->slug  = auth()->user()->username.'-'.$modifiedTitle.rand(1,1000); }

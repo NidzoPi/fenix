@@ -14,7 +14,7 @@ class AddSlugColumnToPosts extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('slug')->unique()->after('title');
+            $table->text('slug')->unique()->after('title');
         });
     }
 

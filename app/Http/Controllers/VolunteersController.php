@@ -53,11 +53,11 @@ class VolunteersController extends Controller
     {
     	$data = request()->validate([
 
-    		'first_and_last_name' => 'required',
-    		'date_of_joining' => 'required',
-            'date_of_born'   => 'required',
-            'jmbg'  => 'required',
-            'rank'  => 'required',
+    		'first_and_last_name' => 'required|regex:/^[\pL\s]+$/u|min:5|max:40',
+    		'date_of_joining' => 'required|date',
+            'date_of_born'   => 'required|date',
+            'jmbg'  => 'required|numeric',
+            'rank'  => 'required|regex:/[a-z{1}A-Z{1}]+/',
     		'image' => ['required', 'image'],
 
     	]);
@@ -137,9 +137,11 @@ class VolunteersController extends Controller
 
         $data =request()->validate([
 
-            'first_and_last_name' => 'required',
-            'date_of_joining' => 'required',
-            'date_of_born' => 'required',
+            'first_and_last_name' => 'required|regex:/^[\pL\s]+$/u|min:5|max:40',
+            'date_of_joining' => 'required|date',
+            'date_of_born' => 'required|date',
+            'jmbg'  => 'required|numeric',
+            'rank'  => 'required|regex:/[a-z{1}A-Z{1}]+/',
             'image' => '',
 
         ]);

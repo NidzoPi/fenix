@@ -59,7 +59,7 @@
                     <label for="date_of_born" class="col-md-4 col-form-label text-md-right">{{ __('Datum rođenja') }}</label>
 
                             <div class="col-md-6">
-                                <input id="date_of_born" type="date" value="01-12-2012" class="form-control @error('date_of_born') is-invalid @enderror" name="date_of_born" value="{{ old('date_of_born') }}" required autocomplete="date_of_born" rows="10"> 
+                                <input id="date_of_born" type="date" class="form-control @error('date_of_born') is-invalid @enderror" name="date_of_born" value="{{ old('date_of_born') }}" required autocomplete="date_of_born" rows="10"> 
 
 
                                 @error('date_of_born')

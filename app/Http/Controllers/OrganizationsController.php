@@ -73,13 +73,13 @@ class OrganizationsController extends Controller
 
     	$data =request()->validate([
 
-    		'title' => 'required',
-    		'address' => 'required',
-            'place' => 'required',
+    		'title' => 'required|string|min:3|max:40',
+    		'address' => 'required|string|min:3|max:40',
+            'place' => 'required|regex:/[a-z{1}A-Z{1}]+/|min:2|max:30',
     		'fbUrl' => 'nullable|url',
             'ytUrl' => 'nullable|url',
-            'president' => 'required',
-            'tNumber' => 'required',
+            'president' => 'required|regex:/[a-z{1}A-Z{1}]+/|min:4|max:40',
+            'tNumber' => 'required|numeric',
     		'image' => '',
 
     	]);

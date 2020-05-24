@@ -21,7 +21,7 @@
                 </div>
 
                  <div class="d-flex">
-                    <div class="pr-3">Datum rođenja: {{ date('d.m.Y', strtotime($volunteer->date_of_birth)) }} </div>
+                    <div class="pr-3">Datum rođenja: {{ date('d.m.Y', strtotime($volunteer->date_of_born)) }} </div>
                 </div>
           
                 <div class="d-flex pt-2">
